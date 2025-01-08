@@ -1,0 +1,167 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fcffd5;
+}
+
+header {
+  background-color: #fcffd5;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  height: 80px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.logo2 {
+  height: 40px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+  font-weight: 300;
+}
+
+.main {
+  padding: 20px;
+}
+
+.set {
+  margin-bottom: 40px;
+}
+
+.set-logo {
+  display: block;
+  height: 60px;
+  width: auto;
+  margin: auto;
+}
+
+.set-name {
+  display: block;
+  width: auto;
+  text-align: center;
+  margin: 0 auto 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.cards-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.card {
+  flex: 0 0 auto;
+  text-align: center;
+  max-width: 150px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.card .info {
+  font-size: 14px;
+  color: #555;
+}
+
+.card .name {
+  color: #000000;
+}
+
+
+
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s;
+}
+
+.popup.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.popup img {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.popup .info {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.popup .switch {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.popup .switch:hover {
+  background-color: #cccccc;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parenji Pokemon Collection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <img src="images/logo-pokemon.svg" alt="Pokemon Logo" class="logo">
+            <h1>Parenji's Collection</h1>
+        </div>
+    </header>
+
+    <main class="main" id="main-content">
+        <!-- The content will be dynamically generated here -->
+    </main>
+    <!-- Popup -->
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <button id="close-popup" class="close-popup">✖</button>
+            <div class="popup-card">
+                <img id="popup-card-image" src="" alt="Pokemon Card">
+            </div>
+            <div class="popup-info">
+                <h2 id="popup-card-name"></h2>
+                <p id="popup-card-set"></p>
+                <p id="popup-card-pokedex"></p>
+            </div>
+            <div class="switch-container">
+                <label class="switch">
+                    <input id="card-language-switch" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+                <span id="language-label">Japanese</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from the JSON file
+        fetch('database.json')
+            .then(response => response.json())
+            .then(data => {
+                const mainContent = document.getElementById('main-content');
+                const popup = document.getElementById('popup');
+                const popupCardImage = document.getElementById('popup-card-image');
+                const popupCardName = document.getElementById('popup-card-name');
+                const popupCardSet = document.getElementById('popup-card-set');
+                const popupCardPokedex = document.getElementById('popup-card-pokedex');
+                const closePopupButton = document.getElementById('close-popup');
+                const cardLanguageSwitch = document.getElementById('card-language-switch');
+                const languageLabel = document.getElementById('language-label');
+                
+                let currentLanguage = 'jp'; // Default language is Japanese
+    
+                // Group cards by set
+                const groupedBySet = data.reduce((acc, card) => {
+                    if (!acc[card.set]) acc[card.set] = [];
+                    acc[card.set].push(card);
+                    return acc;
+                }, {});
+    
+                // Generate HTML for each set
+                Object.keys(groupedBySet).forEach(set => {
+                    const setSection = document.createElement('section');
+                    setSection.className = 'set';
+    
+                    // Add set logo and scritta
+                    const siglaset = groupedBySet[set][0].siglaset;
+                    const setNameFormatted = set.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()) + ` (${siglaset})`;
+                    const setNameElement = document.createElement('div');
+                    setNameElement.className = 'set-name';
+                    setNameElement.textContent = setNameFormatted;
+    
+                    const setLogo = document.createElement('img');
+                    setLogo.src = `images/logo-${set}.webp`;
+                    setLogo.alt = `${set} Logo`;
+                    setLogo.className = 'set-logo';
+                    setSection.appendChild(setLogo);
+                    setSection.appendChild(setNameElement);
+    
+                    // Create cards container
+                    const cardsContainer = document.createElement('div');
+                    cardsContainer.className = 'cards-container';
+    
+                    // Add cards to the container
+                    groupedBySet[set].forEach(card => {
+                        const cardDiv = document.createElement('div');
+                        cardDiv.className = 'card';
+                        cardDiv.dataset.name = card.nome;
+                        cardDiv.dataset.set = setNameFormatted;
+                        cardDiv.dataset.pokedex = card.pokedex;
+    
+                        const cardImg = document.createElement('img');
+                        cardImg.src = `images/${card.nome}-jp.webp`;
+                        cardImg.alt = card.nome;
+    
+                        const cardInfo = document.createElement('div');
+                        cardInfo.className = 'info';
+                        cardInfo.innerHTML = `
+                            <div>${card.card}</div>
+                            <div>#${card.pokedex}</div>
+                        `;
+                        const cardName = document.createElement('div');
+                        cardName.className = 'name';
+                        cardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
+                        cardDiv.appendChild(cardName);
+    
+                        cardDiv.appendChild(cardImg);
+                        cardDiv.appendChild(cardInfo);
+                        cardsContainer.appendChild(cardDiv);
+    
+                        // Add click event to open popup
+                        cardDiv.addEventListener('click', () => {
+                            popupCardImage.src = `images/${card.nome}-${currentLanguage}.webp`;
+                            popupCardImage.alt = card.nome;
+                            popupCardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
+                            popupCardSet.textContent = `Set: ${setNameFormatted}`;
+                            popupCardPokedex.textContent = `Pokedex: ${card.pokedex}`;
+                            popup.classList.remove('hidden');
+                            popup.classList.add('active');
+                        });
+                    });
+    
+                    setSection.appendChild(cardsContainer);
+                    mainContent.appendChild(setSection);
+                });
+    
+                // Handle close popup
+                closePopupButton.addEventListener('click', () => {
+                    popup.classList.remove('active');
+                    popup.classList.add('hidden');
+                });
+    
+                // Handle language switch
+                cardLanguageSwitch.addEventListener('change', () => {
+                    currentLanguage = cardLanguageSwitch.checked ? 'it' : 'jp';
+                    languageLabel.textContent = cardLanguageSwitch.checked ? 'Italian' : 'Japanese';
+    
+                    // Update the card image in the popup
+                    const pokemonName = popupCardImage.alt;
+                    if (pokemonName) {
+                        popupCardImage.src = `images/${pokemonName}-${currentLanguage}.webp`;
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    </script>
+    
+</body>
+
+</html>
