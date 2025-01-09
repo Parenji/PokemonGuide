@@ -22,7 +22,9 @@
     <!-- Popup -->
     <div id="popup" class="popup hidden">
         <div class="popup-content">
-            <button id="close-popup" class="close-popup">✖</button>
+            <button class="close-popup" aria-label="Close popup" id="close-popup">
+                <span class="close-icon">&times;</span>
+              </button>
             <div class="popup-name">
                 <div id="popup-card-name"></div>
             </div>
@@ -103,7 +105,7 @@
                         cardDiv.dataset.pokedex = card.pokedex;
 
                         const cardImg = document.createElement('img');
-                        cardImg.src = `images/${card.nome}-jp.webp`;
+                        cardImg.src = `images/${card.img}-jp.webp`;
                         cardImg.alt = card.nome;
 
                         const cardInfo = document.createElement('div');
@@ -123,9 +125,9 @@
 
                         // Add click event to open popup
                         cardDiv.addEventListener('click', () => {
-                            popupCardImage.alt = card.nome;
+                            popupCardImage.alt = card.img;
                             popupCardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
-                            popupCardImage.src = `images/${card.nome}-${currentLanguage}.webp`;
+                            popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
 
                             popupCardSet.textContent = `Set: ${setNameFormatted}`;
                             popupCardPokedex.textContent = `Pokedex: ${card.pokedex}`;
@@ -150,7 +152,7 @@
 
                 // Handle language switch
                 cardLanguageSwitch.addEventListener('change', () => {
-                    currentLanguage = cardLanguageSwitch.checked ? 'it' : 'jp';
+                    currentLanguage = cardLanguageSwitch.checked ? 'en' : 'jp';
 
                     // Update the card image in the popup
                     const pokemonName = popupCardImage.alt;

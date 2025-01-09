@@ -80,6 +80,7 @@ h1 {
   margin-bottom: 2px;
   margin-top: 2px;
   background-color: white;
+  cursor: pointer;
 }
 
 .card .info {
@@ -141,6 +142,10 @@ body.no-scroll {
   font-size: 16px;
   color: #333;
   margin-bottom: 10px;
+}
+
+.name{
+  cursor: pointer;
 }
 
 .popup-name {
@@ -270,7 +275,7 @@ input:not(:checked) + .slider .flag-it {
 
 input:checked + .slider::before {
   transform: translateX(30px);
-  background-image: url(images/it.png) ;
+  background-image: url(images/en.png) ;
 }
 
 /* Update the label dynamically */
@@ -291,4 +296,30 @@ input:checked + .slider::before {
   cursor: pointer;
   width: 30px;
   height: 30px;
+}
+
+.close-popup {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.close-popup:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
+}
+
+.close-popup:active {
+  transform: scale(0.95); /* Slight "click" animation */
+}
+
+.close-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #333; /* Customize to match your theme */
 }
