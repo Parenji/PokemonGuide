@@ -86,9 +86,6 @@ h1 {
   color: #cccccc;
 }
 
-.card .name {
-}
-
 
 
 /* Popup Styles */
@@ -107,6 +104,13 @@ h1 {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.3s;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+/* Disabilita lo scorrimento del background */
+body.no-scroll {
+  overflow: hidden;
 }
 
 .popup.active {
@@ -115,7 +119,7 @@ h1 {
 }
 
 .popup-content {
-  background-color: #dedede;
+  background-color: #f6f6f6;
   padding: 5px;
   border-radius: 10px;
   max-width: 90%;
@@ -128,14 +132,20 @@ h1 {
   width: 100%;
   height: auto;
   max-width: 390px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 0px;
+  margin-top: 10px;
 }
 
 .popup .info {
   font-size: 16px;
   color: #333;
   margin-bottom: 10px;
+}
+
+.popup-name {
+  font-size: 30px;
+  color: #333;
+  margin-top: 20px;
 }
 
 .popup .switch {
@@ -266,4 +276,18 @@ input:checked + .slider::before {
 #language-label {
   font-size: 14px;
   color: #333;
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  border-radius: 90px;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
 }

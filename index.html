@@ -23,11 +23,13 @@
     <div id="popup" class="popup hidden">
         <div class="popup-content">
             <button id="close-popup" class="close-popup">✖</button>
+            <div class="popup-name">
+                <div id="popup-card-name"></div>
+            </div>
             <div class="popup-card">
                 <img id="popup-card-image" src="" alt="Pokemon Card">
             </div>
             <div class="popup-info">
-                <h1 id="popup-card-name"></h1>
                 <p id="popup-card-set"></p>
                 <p id="popup-card-card"></p>
                 <p id="popup-card-pokedex"></p>
@@ -39,7 +41,6 @@
 
                     </span>
                 </label>
-                <span id="language-label">Japanesee</span>
             </div>
         </div>
     </div>
@@ -122,15 +123,17 @@
 
                         // Add click event to open popup
                         cardDiv.addEventListener('click', () => {
-                            popupCardImage.src = `images/${card.nome}-${currentLanguage}.webp`;
                             popupCardImage.alt = card.nome;
                             popupCardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
+                            popupCardImage.src = `images/${card.nome}-${currentLanguage}.webp`;
+
                             popupCardSet.textContent = `Set: ${setNameFormatted}`;
                             popupCardPokedex.textContent = `Pokedex: ${card.pokedex}`;
                             popupCardCard.textContent = `(${card.card})`;
 
                             popup.classList.remove('hidden');
                             popup.classList.add('active');
+                            document.body.classList.add('no-scroll');
                         });
                     });
 
@@ -141,13 +144,13 @@
                 // Handle close popup
                 closePopupButton.addEventListener('click', () => {
                     popup.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
                     popup.classList.add('hidden');
                 });
 
                 // Handle language switch
                 cardLanguageSwitch.addEventListener('change', () => {
                     currentLanguage = cardLanguageSwitch.checked ? 'it' : 'jp';
-                    languageLabel.textContent = cardLanguageSwitch.checked ? 'Italian' : 'Japanese';
 
                     // Update the card image in the popup
                     const pokemonName = popupCardImage.alt;
