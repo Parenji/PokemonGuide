@@ -116,7 +116,7 @@
                         `;
                         const cardName = document.createElement('div');
                         cardName.className = 'name';
-                        cardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
+                        cardName.textContent = card.nome;
                         cardDiv.appendChild(cardName);
 
                         cardDiv.appendChild(cardImg);
@@ -126,12 +126,12 @@
                         // Add click event to open popup
                         cardDiv.addEventListener('click', () => {
                             popupCardImage.alt = card.img;
-                            popupCardName.textContent = card.nome.charAt(0).toUpperCase() + card.nome.slice(1);
+                            popupCardName.textContent = card.nome;
                             popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
 
                             popupCardSet.textContent = `Set: ${setNameFormatted}`;
                             popupCardPokedex.textContent = `Pokedex: ${card.pokedex}`;
-                            popupCardCard.textContent = `(${card.card})`;
+                            popupCardCard.textContent = `Carta: (${card.card})`;
 
                             popup.classList.remove('hidden');
                             popup.classList.add('active');

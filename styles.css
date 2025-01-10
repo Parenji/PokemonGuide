@@ -62,14 +62,16 @@ h1 {
 .cards-container {
   display: flex;
   overflow-x: auto;
-  gap: 20px;
+  gap: 20px 10px;
   padding: 10px 0;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .card {
   flex: 0 0 auto;
   text-align: center;
-  max-width: 150px;
+  max-width: calc(12vw + 100px);
 }
 
 .card img {
@@ -151,7 +153,7 @@ body.no-scroll {
 .popup-name {
   font-size: 30px;
   color: #333;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .popup .switch {
