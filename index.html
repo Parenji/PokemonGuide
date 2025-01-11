@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div class="pody">
     <header>
         <div class="header-container">
             <img src="images/logo-pokemon.svg" alt="Pokemon Logo" class="logo">
@@ -21,10 +22,11 @@
     </main>
     <!-- Popup -->
     <div id="popup" class="popup hidden">
+        <button id="prev-pokemon" class="nav-arrow left">&lt;</button>
         <div class="popup-content">
             <button class="close-popup" aria-label="Close popup" id="close-popup">
                 <span class="close-icon">&times;</span>
-              </button>
+            </button>
             <div class="popup-name">
                 <div id="popup-card-name"></div>
             </div>
@@ -32,9 +34,21 @@
                 <img id="popup-card-image" src="" alt="Pokemon Card">
             </div>
             <div class="popup-info">
-                <p id="popup-card-set"></p>
-                <p id="popup-card-card"></p>
+                <div class="popup-set">
+                    <p>Japanese Set:</p>
+                    <p>International Set:</p>
+                    <img id="popup-set-jp" src="" alt="Set JP">
+                    <img id="popup-set-en" src="" alt="Set EN">
+                    <p id="popup-card-set-jp"></p>
+                    <p id="popup-card-set-en"></p>
+                    <p id="popup-card-jp"></p>
+                    <p id="popup-card-en"></p>
+                </div>
                 <p id="popup-card-pokedex"></p>
+                <p id="popup-card-ill"></p>
+                <p id="popup-card-anno"></p>
+
+
             </div>
             <div class="switch-container">
                 <label class="switch">
@@ -45,11 +59,10 @@
                 </label>
             </div>
         </div>
+        <button id="next-pokemon" class="nav-arrow right">&gt;</button>
     </div>
 
     <script>
-
-        // Fetch data from the JSON file
         fetch('database.json')
             .then(response => response.json())
             .then(data => {
@@ -57,14 +70,24 @@
                 const popup = document.getElementById('popup');
                 const popupCardImage = document.getElementById('popup-card-image');
                 const popupCardName = document.getElementById('popup-card-name');
+                const popupSetJP = document.getElementById('popup-set-jp');
+                const popupSetEN = document.getElementById('popup-set-en');
+                const popupCardSetJP = document.getElementById('popup-card-set-jp');
+                const popupCardSetEN = document.getElementById('popup-card-set-en');
+                const popupCardanno = document.getElementById('popup-card-anno')
                 const popupCardSet = document.getElementById('popup-card-set');
                 const popupCardPokedex = document.getElementById('popup-card-pokedex');
-                const popupCardCard = document.getElementById('popup-card-card');
+                const popupCardIll = document.getElementById('popup-card-ill');
+                const popupCardJP = document.getElementById('popup-card-jp');
+                const popupCardEN = document.getElementById('popup-card-en');
                 const closePopupButton = document.getElementById('close-popup');
+                const prevButton = document.getElementById('prev-pokemon');
+                const nextButton = document.getElementById('next-pokemon');
                 const cardLanguageSwitch = document.getElementById('card-language-switch');
-                const languageLabel = document.getElementById('language-label');
 
                 let currentLanguage = 'jp'; // Default language is Japanese
+                let currentIndex = -1; // Track the index of the currently displayed card
+                let flatCardsArray = []; // Flattened array of all cards
 
                 // Group cards by set
                 const groupedBySet = data.reduce((acc, card) => {
@@ -78,7 +101,6 @@
                     const setSection = document.createElement('section');
                     setSection.className = 'set';
 
-                    // Add set logo and scritta
                     const siglaset = groupedBySet[set][0].siglaset;
                     const setNameFormatted = set.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()) + ` (${siglaset})`;
                     const setNameElement = document.createElement('div');
@@ -92,12 +114,12 @@
                     setSection.appendChild(setLogo);
                     setSection.appendChild(setNameElement);
 
-                    // Create cards container
                     const cardsContainer = document.createElement('div');
                     cardsContainer.className = 'cards-container';
 
-                    // Add cards to the container
                     groupedBySet[set].forEach(card => {
+                        flatCardsArray.push(card); // Add card to flat array
+
                         const cardDiv = document.createElement('div');
                         cardDiv.className = 'card';
                         cardDiv.dataset.name = card.nome;
@@ -125,14 +147,8 @@
 
                         // Add click event to open popup
                         cardDiv.addEventListener('click', () => {
-                            popupCardImage.alt = card.img;
-                            popupCardName.textContent = card.nome;
-                            popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
-
-                            popupCardSet.textContent = `Set: ${setNameFormatted}`;
-                            popupCardPokedex.textContent = `Pokedex: ${card.pokedex}`;
-                            popupCardCard.textContent = `Carta: (${card.card})`;
-
+                            currentIndex = flatCardsArray.indexOf(card);
+                            updatePopupContent(card);
                             popup.classList.remove('hidden');
                             popup.classList.add('active');
                             document.body.classList.add('no-scroll');
@@ -141,6 +157,49 @@
 
                     setSection.appendChild(cardsContainer);
                     mainContent.appendChild(setSection);
+                });
+
+                // Update popup content
+                function updatePopupContent(card) {
+                    popupCardImage.alt = card.img;
+                    popupCardName.textContent = card.nome;
+                    popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
+                    popupSetJP.src = `images/logo-${card.set}.webp`;
+                    popupSetEN.src = `images/loghi-en/logo-${card.seten}.webp`;
+
+                    popupCardSetJP.textContent = capitalizeAndReplaceHyphens(card.set) + ` (${card.siglaset})`;
+                    popupCardSetEN.textContent = capitalizeAndReplaceHyphens(card.seten) + ` (${card.siglaseten})`;
+                    popupCardPokedex.textContent = `Pokedex: #${card.pokedex}`;
+                    popupCardIll.textContent = `Illustrazione: ${card.illustratore}`;
+                    popupCardJP.textContent = `Carta: (${card.card})`;
+                    popupCardEN.textContent = `Carta: (${card.carden})`;
+                    popupCardanno.textContent = `Anno: ${card.anno}`
+                }
+
+                function capitalizeAndReplaceHyphens(str) {
+                    if (typeof str !== 'string') {
+                        return '151'; // Ritorna una stringa vuota se str non è una stringa
+                    }
+                    return str
+                        .split('-') // Divide la stringa nei trattini
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Maiuscola iniziale e minuscole per il resto
+                        .join(' '); // Ricollega le parole con uno spazio
+                }
+
+
+                // Handle navigation buttons
+                prevButton.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updatePopupContent(flatCardsArray[currentIndex]);
+                    }
+                });
+
+                nextButton.addEventListener('click', () => {
+                    if (currentIndex < flatCardsArray.length - 1) {
+                        currentIndex++;
+                        updatePopupContent(flatCardsArray[currentIndex]);
+                    }
                 });
 
                 // Handle close popup
@@ -153,17 +212,14 @@
                 // Handle language switch
                 cardLanguageSwitch.addEventListener('change', () => {
                     currentLanguage = cardLanguageSwitch.checked ? 'en' : 'jp';
-
-                    // Update the card image in the popup
-                    const pokemonName = popupCardImage.alt;
-                    if (pokemonName) {
-                        popupCardImage.src = `images/${pokemonName}-${currentLanguage}.webp`;
+                    if (currentIndex >= 0) {
+                        updatePopupContent(flatCardsArray[currentIndex]);
                     }
                 });
             })
             .catch(error => console.error('Error loading JSON:', error));
     </script>
-
+    </div>
 </body>
 
 </html>
