@@ -380,7 +380,7 @@ input:checked + .slider::before {
 .popup-set img{
   height: auto;
   flex: 1;
-  width: 100px;
+  width: 200px;
   max-width: 38%;
   padding: 0px 6%;
   margin-bottom: 0px;
