@@ -376,6 +376,7 @@ input:checked + .slider::before {
   border-radius: 15px;
   padding: 10px 0;
   margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .popup-set img{
@@ -390,4 +391,8 @@ input:checked + .slider::before {
 .popup-set p{
 width: 50%;
 margin: 0px;
+}
+
+.popup-info div{
+padding: 2px;
 }
