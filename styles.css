@@ -49,12 +49,12 @@ h1 {
 }
 
 .set {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .set-logo {
   display: block;
-  height: 60px;
+  height: 50px;
   width: auto;
   margin: auto;
 }
@@ -63,7 +63,7 @@ h1 {
   display: block;
   width: auto;
   text-align: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
   font-size: 14px;
   color: #cccccc;
 }
@@ -71,7 +71,7 @@ h1 {
 .cards-container {
   display: flex;
   overflow-x: auto;
-  gap: 20px 10px;
+  gap: 15px 10px;
   padding: 10px 0;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -159,6 +159,7 @@ body.no-scroll {
 
 .name{
   cursor: pointer;
+  font-weight: bold;
 }
 
 .popup-name {
