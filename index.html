@@ -14,120 +14,151 @@
 
 <body>
     <div class="pody">
-    <header>
-        <div class="header-container">
-            <img src="images/logo-pokemon.svg" alt="Pokemon Logo" class="logo">
-            <h1>Parenji's Collection</h1>
+        <header>
+            <div class="header-container">
+                <img src="images/logo-pokemon.svg" alt="Pokemon Logo" class="logo">
+                <h1>Parenji's Collection</h1>
+            </div>
+        </header>
+        <div class="centratura">
+            <button id="toggle-order">Ordina per Set</button>
         </div>
-    </header>
-
-    <main class="main" id="main-content">
-        <!-- The content will be dynamically generated here -->
-    </main>
-    <!-- Popup -->
-    <div id="popup" class="popup hidden">
-        <button id="prev-pokemon" class="nav-arrow left">&lt;</button>
-        <div class="popup-content">
-            <button class="close-popup" aria-label="Close popup" id="close-popup">
-                <span class="close-icon">&times;</span>
-            </button>
-            <div class="popup-name">
-                <div id="popup-card-name"></div>
-            </div>
-            <div class="popup-card">
-                <img id="popup-card-image" src="" alt="Pokemon Card">
-            </div>
-            <div class="popup-info">
-                <div class="popup-set">
-                    <p>Japanese Set:</p>
-                    <p>International Set:</p>
-                    <img id="popup-set-jp" src="" alt="Set JP">
-                    <img id="popup-set-en" src="" alt="Set EN">
-                    <p id="popup-card-set-jp"></p>
-                    <p id="popup-card-set-en"></p>
-                    <p id="popup-card-jp"></p>
-                    <p id="popup-card-en"></p>
+        <main class="main" id="main-content">
+            <!-- The content will be dynamically generated here -->
+        </main>
+        <!-- Popup -->
+        <div id="popup" class="popup hidden">
+            <button id="prev-pokemon" class="nav-arrow left">&lt;</button>
+            <div class="popup-content">
+                <button class="close-popup" aria-label="Close popup" id="close-popup">
+                    <span class="close-icon">&times;</span>
+                </button>
+                <div class="popup-name">
+                    <div id="popup-card-name"></div>
                 </div>
-                <div id="popup-card-pokedex"></div>
-                <div id="popup-card-ill"></div>
-                <div id="popup-card-anno"></div>
+                <div class="popup-card">
+                    <img id="popup-card-image" src="" alt="Pokemon Card">
+                </div>
+                <div class="popup-info">
+                    <div class="popup-set">
+                        <p>Japanese Set:</p>
+                        <p>International Set:</p>
+                        <img id="popup-set-jp" src="" alt="Set JP">
+                        <img id="popup-set-en" src="" alt="Set EN">
+                        <p id="popup-card-set-jp"></p>
+                        <p id="popup-card-set-en"></p>
+                        <p id="popup-card-jp"></p>
+                        <p id="popup-card-en"></p>
+                    </div>
+                    <div id="popup-card-pokedex"></div>
+                    <div id="popup-card-ill"></div>
+                    <div id="popup-card-anno"></div>
 
 
+                </div>
+                <div class="switch-container">
+                    <label class="switch">
+                        <input id="card-language-switch" type="checkbox">
+                        <span class="slider">
+
+                        </span>
+                    </label>
+                </div>
             </div>
-            <div class="switch-container">
-                <label class="switch">
-                    <input id="card-language-switch" type="checkbox">
-                    <span class="slider">
-
-                    </span>
-                </label>
-            </div>
+            <button id="next-pokemon" class="nav-arrow right">&gt;</button>
         </div>
-        <button id="next-pokemon" class="nav-arrow right">&gt;</button>
-    </div>
 
-    <script>
-        fetch('database.json')
-            .then(response => response.json())
-            .then(data => {
-                const mainContent = document.getElementById('main-content');
-                const popup = document.getElementById('popup');
-                const popupCardImage = document.getElementById('popup-card-image');
-                const popupCardName = document.getElementById('popup-card-name');
-                const popupSetJP = document.getElementById('popup-set-jp');
-                const popupSetEN = document.getElementById('popup-set-en');
-                const popupCardSetJP = document.getElementById('popup-card-set-jp');
-                const popupCardSetEN = document.getElementById('popup-card-set-en');
-                const popupCardanno = document.getElementById('popup-card-anno')
-                const popupCardSet = document.getElementById('popup-card-set');
-                const popupCardPokedex = document.getElementById('popup-card-pokedex');
-                const popupCardIll = document.getElementById('popup-card-ill');
-                const popupCardJP = document.getElementById('popup-card-jp');
-                const popupCardEN = document.getElementById('popup-card-en');
-                const closePopupButton = document.getElementById('close-popup');
-                const prevButton = document.getElementById('prev-pokemon');
-                const nextButton = document.getElementById('next-pokemon');
-                const cardLanguageSwitch = document.getElementById('card-language-switch');
+        <script>
 
-                let currentLanguage = 'jp'; // Default language is Japanese
-                let currentIndex = -1; // Track the index of the currently displayed card
-                let flatCardsArray = []; // Flattened array of all cards
+            fetch('database.json')
+                .then(response => response.json())
+                .then(data => {
+                    const mainContent = document.getElementById('main-content');
+                    const popup = document.getElementById('popup');
+                    const popupCardImage = document.getElementById('popup-card-image');
+                    const popupCardName = document.getElementById('popup-card-name');
+                    const popupSetJP = document.getElementById('popup-set-jp');
+                    const popupSetEN = document.getElementById('popup-set-en');
+                    const popupCardSetJP = document.getElementById('popup-card-set-jp');
+                    const popupCardSetEN = document.getElementById('popup-card-set-en');
+                    const popupCardanno = document.getElementById('popup-card-anno')
+                    const popupCardSet = document.getElementById('popup-card-set');
+                    const popupCardPokedex = document.getElementById('popup-card-pokedex');
+                    const popupCardIll = document.getElementById('popup-card-ill');
+                    const popupCardJP = document.getElementById('popup-card-jp');
+                    const popupCardEN = document.getElementById('popup-card-en');
+                    const closePopupButton = document.getElementById('close-popup');
+                    const prevButton = document.getElementById('prev-pokemon');
+                    const nextButton = document.getElementById('next-pokemon');
+                    const cardLanguageSwitch = document.getElementById('card-language-switch');
 
-                // Group cards by set
-                const groupedBySet = data.reduce((acc, card) => {
-                    if (!acc[card.set]) acc[card.set] = [];
-                    acc[card.set].push(card);
-                    return acc;
-                }, {});
+                    let currentLanguage = 'jp'; // Default language is Japanese
+                    let currentIndex = -1; // Track the index of the currently displayed card
+                    const toggleOrderButton = document.getElementById('toggle-order');
 
-                // Generate HTML for each set
-                Object.keys(groupedBySet).forEach(set => {
-                    const setSection = document.createElement('section');
-                    setSection.className = 'set';
+                    let orderMode = 'pokedex'; // 'set' (default) oppure 'pokedex'
+                    let flatCardsArray = data.slice(); // Copia dei dati originali
 
-                    const siglaset = groupedBySet[set][0].siglaset;
-                    const setNameFormatted = set.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()) + ` (${siglaset})`;
-                    const setNameElement = document.createElement('div');
-                    setNameElement.className = 'set-name';
-                    setNameElement.textContent = setNameFormatted;
+                    function renderCards() {
+                        mainContent.innerHTML = ''; // Pulisce il contenuto prima di ri-renderizzare
 
-                    const setLogo = document.createElement('img');
-                    setLogo.src = `images/logo-${set}.webp`;
-                    setLogo.alt = `${set} Logo`;
-                    setLogo.className = 'set-logo';
-                    setSection.appendChild(setLogo);
-                    setSection.appendChild(setNameElement);
+                        if (orderMode === 'set') {
+                            // Raggruppa per set
+                            const groupedBySet = flatCardsArray.reduce((acc, card) => {
+                                if (!acc[card.siglaset]) acc[card.siglaset] = [];
+                                acc[card.siglaset].push(card);
+                                return acc;
+                            }, {});
 
-                    const cardsContainer = document.createElement('div');
-                    cardsContainer.className = 'cards-container';
+                            Object.keys(groupedBySet).forEach(sett => {
+                                const setSection = document.createElement('section');
+                                setSection.className = 'set';
+                                const siglaset = groupedBySet[sett][0].siglaset;
+                                const set = groupedBySet[sett][0].set.toString();
+                                console.log("Valore di set:", set);
+                                const setNameFormatted = set.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()) + ` (${siglaset})`;
+                                const setNameElement = document.createElement('div');
+                                setNameElement.className = 'set-name';
+                                setNameElement.textContent = setNameFormatted;
 
-                    groupedBySet[set].forEach(card => {
-                        flatCardsArray.push(card); // Add card to flat array
+                                const setLogo = document.createElement('img');
+                                setLogo.src = `images/logo-${set}.webp`;
+                                setLogo.alt = `${set} Logo`;
+                                setLogo.className = 'set-logo';
+                                setSection.appendChild(setLogo);
+                                setSection.appendChild(setNameElement);
 
+                                const cardsContainer = document.createElement('div');
+                                cardsContainer.className = 'cards-container';
+
+                                groupedBySet[sett].forEach(card => {
+                                    cardsContainer.appendChild(createCardElement(card));
+                                });
+
+                                setSection.appendChild(cardsContainer);
+                                mainContent.appendChild(setSection);
+                            });
+
+                        } else if (orderMode === 'pokedex') {
+                            // Ordina per numero Pokédex
+                            const sortedByPokedex = flatCardsArray.slice().sort((a, b) => a.pokedex - b.pokedex);
+
+                            const pokedexContainer = document.createElement('div');
+                            pokedexContainer.className = 'cards-container';
+
+                            sortedByPokedex.forEach(card => {
+                                pokedexContainer.appendChild(createCardElement(card));
+                            });
+
+                            mainContent.appendChild(pokedexContainer);
+                        }
+                    }
+
+                    function createCardElement(card) {
                         const cardDiv = document.createElement('div');
                         cardDiv.className = 'card';
                         cardDiv.dataset.name = card.nome;
-                        cardDiv.dataset.set = setNameFormatted;
+                        cardDiv.dataset.set = card.set;
                         cardDiv.dataset.pokedex = card.pokedex;
 
                         const cardImg = document.createElement('img');
@@ -137,19 +168,18 @@
                         const cardInfo = document.createElement('div');
                         cardInfo.className = 'info';
                         cardInfo.innerHTML = `
-                            <div>${card.card}</div>
-                            <div>#${card.pokedex}</div>
-                            <div>${card.illustratore}</div>
-
-                        `;
+                <div>${card.card}</div>
+                <div>#${card.pokedex}</div>
+                <div>${card.illustratore}</div>
+            `;
                         const cardName = document.createElement('div');
                         cardName.className = 'name';
                         cardName.textContent = card.nome;
-                        cardDiv.appendChild(cardName);
 
+                        cardDiv.appendChild(cardName);
                         cardDiv.appendChild(cardImg);
                         cardDiv.appendChild(cardInfo);
-                        cardsContainer.appendChild(cardDiv);
+
 
                         // Add click event to open popup
                         cardDiv.addEventListener('click', () => {
@@ -158,73 +188,82 @@
                             popup.classList.remove('hidden');
                             popup.classList.add('active');
                             document.body.classList.add('no-scroll');
+                        
                         });
+                        return cardDiv;
+                    }
+
+                    toggleOrderButton.addEventListener('click', () => {
+                        orderMode = orderMode === 'set' ? 'pokedex' : 'set';
+                        toggleOrderButton.textContent = orderMode === 'set' ? "Ordina per Pokédex" : "Ordina per Set";
+                        renderCards();
                     });
 
-                    setSection.appendChild(cardsContainer);
-                    mainContent.appendChild(setSection);
-                });
+                    renderCards(); // Prima renderizzazione
 
-                // Update popup content
-                function updatePopupContent(card) {
-                    popupCardImage.alt = card.img;
-                    popupCardName.textContent = card.nome;
-                    popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
-                    popupSetJP.src = `images/logo-${card.set}.webp`;
-                    popupSetEN.src = `images/loghi-en/logo-${card.seten}.webp`;
+                                // Update popup content
+            function updatePopupContent(card) {
+                popupCardImage.alt = card.img;
+                popupCardName.textContent = card.nome;
+                popupCardImage.src = `images/${card.img}-${currentLanguage}.webp`;
+                popupSetJP.src = `images/logo-${card.set}.webp`;
+                popupSetEN.src = `images/loghi-en/logo-${card.seten}.webp`;
 
-                    popupCardSetJP.textContent = capitalizeAndReplaceHyphens(card.set) + ` (${card.siglaset})`;
-                    popupCardSetEN.textContent = capitalizeAndReplaceHyphens(card.seten) + ` (${card.siglaseten})`;
-                    popupCardPokedex.textContent = `Pokedex: #${card.pokedex}`;
-                    popupCardIll.textContent = `Illustrazione: ${card.illustratore}`;
-                    popupCardJP.textContent = `Carta: (${card.card})`;
-                    popupCardEN.textContent = `Carta: (${card.carden})`;
-                    popupCardanno.textContent = `Anno: ${card.anno}`
+                popupCardSetJP.textContent = capitalizeAndReplaceHyphens(card.set) + ` (${card.siglaset})`;
+                popupCardSetEN.textContent = capitalizeAndReplaceHyphens(card.seten) + ` (${card.siglaseten})`;
+                popupCardPokedex.textContent = `Pokedex: #${card.pokedex}`;
+                popupCardIll.textContent = `Illustrazione: ${card.illustratore}`;
+                popupCardJP.textContent = `Carta: (${card.card})`;
+                popupCardEN.textContent = `Carta: (${card.carden})`;
+                popupCardanno.textContent = `Anno: ${card.anno}`
+            }
+
+            function capitalizeAndReplaceHyphens(str) {
+                if (typeof str !== 'string') {
+                    return '151'; // Ritorna una stringa vuota se str non è una stringa
                 }
+                return str
+                    .split('-') // Divide la stringa nei trattini
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Maiuscola iniziale e minuscole per il resto
+                    .join(' '); // Ricollega le parole con uno spazio
+            }
 
-                function capitalizeAndReplaceHyphens(str) {
-                    if (typeof str !== 'string') {
-                        return '151'; // Ritorna una stringa vuota se str non è una stringa
-                    }
-                    return str
-                        .split('-') // Divide la stringa nei trattini
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Maiuscola iniziale e minuscole per il resto
-                        .join(' '); // Ricollega le parole con uno spazio
+
+            // Handle navigation buttons
+            prevButton.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updatePopupContent(flatCardsArray[currentIndex]);
                 }
+            });
 
+            nextButton.addEventListener('click', () => {
+                if (currentIndex < flatCardsArray.length - 1) {
+                    currentIndex++;
+                    updatePopupContent(flatCardsArray[currentIndex]);
+                }
+            });
 
-                // Handle navigation buttons
-                prevButton.addEventListener('click', () => {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        updatePopupContent(flatCardsArray[currentIndex]);
-                    }
+            // Handle close popup
+            closePopupButton.addEventListener('click', () => {
+                popup.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                popup.classList.add('hidden');
+            });
+
+            // Handle language switch
+            cardLanguageSwitch.addEventListener('change', () => {
+                currentLanguage = cardLanguageSwitch.checked ? 'en' : 'jp';
+                if (currentIndex >= 0) {
+                    updatePopupContent(flatCardsArray[currentIndex]);
+                }
+            });
                 });
 
-                nextButton.addEventListener('click', () => {
-                    if (currentIndex < flatCardsArray.length - 1) {
-                        currentIndex++;
-                        updatePopupContent(flatCardsArray[currentIndex]);
-                    }
-                });
 
-                // Handle close popup
-                closePopupButton.addEventListener('click', () => {
-                    popup.classList.remove('active');
-                    document.body.classList.remove('no-scroll');
-                    popup.classList.add('hidden');
-                });
 
-                // Handle language switch
-                cardLanguageSwitch.addEventListener('change', () => {
-                    currentLanguage = cardLanguageSwitch.checked ? 'en' : 'jp';
-                    if (currentIndex >= 0) {
-                        updatePopupContent(flatCardsArray[currentIndex]);
-                    }
-                });
-            })
-            .catch(error => console.error('Error loading JSON:', error));
-    </script>
+
+        </script>
     </div>
 </body>
 

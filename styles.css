@@ -396,3 +396,34 @@ margin: 0px;
 .popup-info div{
 padding: 2px;
 }
+
+/* Centra il contenitore del pulsante */
+.centratura {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Distanza dal contenuto sottostante */
+}
+
+/* Stile per il pulsante */
+#toggle-order {
+  padding: 10px 20px; /* Aumenta la dimensione del pulsante */
+  background-color: #2982e7; /* Verde, ma puoi scegliere un altro colore */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Bordo arrotondato */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Effetto hover per il pulsante */
+#toggle-order:hover {
+  background-color: #45a049; /* Colore più scuro quando si passa sopra */
+  transform: scale(1.05); /* Leggero ingrandimento */
+}
+
+/* Effetto quando il pulsante è premuto */
+#toggle-order:active {
+  transform: scale(1); /* Ripristina la dimensione normale */
+}
