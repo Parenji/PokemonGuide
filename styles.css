@@ -419,7 +419,7 @@ padding: 2px;
 
 /* Effetto hover per il pulsante */
 #toggle-order:hover {
-  background-color: #45a049; /* Colore più scuro quando si passa sopra */
+  background-color: #2982e7; /* Colore più scuro quando si passa sopra */
   transform: scale(1.05); /* Leggero ingrandimento */
 }
 

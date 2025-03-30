@@ -103,6 +103,7 @@
                         mainContent.innerHTML = ''; // Pulisce il contenuto prima di ri-renderizzare
 
                         if (orderMode === 'set') {
+                            flatCardsArray = data.slice().sort((a, b) => a.siglaset - b.siglaset);
                             // Raggruppa per set
                             const groupedBySet = flatCardsArray.reduce((acc, card) => {
                                 if (!acc[card.siglaset]) acc[card.siglaset] = [];
@@ -140,6 +141,7 @@
                             });
 
                         } else if (orderMode === 'pokedex') {
+                            flatCardsArray = data.slice().sort((a, b) => a.pokedex - b.pokedex);
                             // Ordina per numero Pokédex
                             const sortedByPokedex = flatCardsArray.slice().sort((a, b) => a.pokedex - b.pokedex);
 
