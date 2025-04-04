@@ -129,11 +129,16 @@
                                 setSection.className = 'set';
                                 const siglaset = groupedBySet[sett][0].siglaset;
                                 const set = groupedBySet[sett][0].set.toString();
+                                const dataset = groupedBySet[sett][0].annotxt;
                                 console.log("Valore di set:", set);
                                 const setNameFormatted = set.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()) + ` (${siglaset})`;
                                 const setNameElement = document.createElement('div');
                                 setNameElement.className = 'set-name';
                                 setNameElement.textContent = setNameFormatted;
+
+                                const setDateElement = document.createElement('div');
+                                setDateElement.className = 'set-date';
+                                setDateElement.textContent = `${dataset}`;
 
                                 const setLogo = document.createElement('img');
                                 setLogo.src = `images/logo-${set}.webp`;
@@ -141,6 +146,7 @@
                                 setLogo.className = 'set-logo';
                                 setSection.appendChild(setLogo);
                                 setSection.appendChild(setNameElement);
+                                setSection.appendChild(setDateElement);
 
                                 const cardsContainer = document.createElement('div');
                                 cardsContainer.className = 'cards-container';
@@ -230,7 +236,7 @@
                 popupCardIll.textContent = `Illustrazione: ${card.illustratore}`;
                 popupCardJP.textContent = `Carta: (${card.card})`;
                 popupCardEN.textContent = `Carta: (${card.carden})`;
-                popupCardanno.textContent = `Anno: ${card.anno}`
+                popupCardanno.textContent = `Data d'uscita: ${card.annotxt}`
             }
 
             function capitalizeAndReplaceHyphens(str) {
